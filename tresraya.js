@@ -1,130 +1,455 @@
-const F = 3;
-const C = 3;
-var matriu = [
-    
-    [" ", " ", " "],
-    [" ", " ", " "],
-    [" ", " ", " "]
-    
-];
+const FILES = 3;
+        const COLUMNES = 3;
+//1forma
 
-window.onload = function () {
-    
-    var divTaula = document.getElementById("raya");
-
-    var taula = document.createElement("table");
-    
-    for (i=0; i<F; i++){
-        
-        var fila = document.createElement("tr");
-
-        taula.appendChild(fila);
-        
-        for (j=0; j<C; j++){
-            
-            var cela = document.createElement("td");
-            cela.setAttribute("id", i+"."+j);
-
-            cela.appendChild(document.createTextNode(matriu[i][j]));
-            
-            fila.appendChild(cela);
-        }
-    }
-    
-    divTaula.appendChild(taula);
-    
-    
-//================================================ OMPLIR CASELLES =================================================================//
-    
-    var casella1 = document.getElementById("0.0");
-    
-    // CASELLA 1
-    casella1.onclick=function(){
-        matriu[0][0]="X";
-        document.getElementById("0.0").innerHTML=matriu[0][0]; // També es podria posar "X"
-    }
-    
-    
-    // CASELLA 2
-    var casella2 = document.getElementById("0.1");
-    
-    casella2.onclick=function(){
-        matriu[0][1]="X";
-        document.getElementById("0.1").innerHTML=matriu[0][1];
-    }
-    
-    
-    // CASELLA 3
-    var casella3 = document.getElementById("0.2");
-    
-    casella3.onclick=function(){
-        matriu[0][2]="X";
-        document.getElementById("0.2").innerHTML=matriu[0][2];
-    }
-    
-    
-    // CASELLA 4
-    var casella4 = document.getElementById("1.0");
-    
-    casella4.onclick=function(){
-        matriu[1][0]="X";
-        document.getElementById("1.0").innerHTML=matriu[1][0];
-    }
-    
-    
-    // CASELLA 5
-    var casella5 = document.getElementById("1.1");
-    
-    casella5.onclick=function(){
-        matriu[1][1]="X";
-        document.getElementById("1.1").innerHTML=matriu[1][1];
-    }
-    
-    
-    // CASELLA 6
-    var casella6 = document.getElementById("1.2");
-    
-    casella6.onclick=function(){
-        matriu[1][2]="X";
-        document.getElementById("1.2").innerHTML=matriu[1][2];
-    }
-    
-    
-    // CASELLA 7
-    var casella7 = document.getElementById("2.0");
-    
-    casella7.onclick=function(){
-        matriu[2][0]="X";
-        document.getElementById("2.0").innerHTML=matriu[2][0];
-    }
-    
-    
-    // CASELLA 8
-    var casella8 = document.getElementById("2.1");
-    
-    casella8.onclick=function(){
-        matriu[2][1]="X";
-        document.getElementById("2.1").innerHTML=matriu[2][1]; 
-    }
-    
-    
-    
-    // CASELLA 9
-    var casella9 = document.getElementById("2.2");
-    
-    casella9.onclick=function(){
-        matriu[2][2]="X";
-        document.getElementById("2.2").innerHTML=matriu[2][2];
-    }
-    
-    
-//============================================================== FINALITZACIÓ DE LA PARTIDA =======================================================================//
-    
-    if (matriu[0][0] == "X" && matriu[0][1] == "X" && matriu[0][2] == "X" && 
-       matriu[1][0] == "X" && matriu[1][1] == "X" && matriu[1][2] == "X" && matriu[2][0] == "X" &&
-       matriu[2][1] == "X" && matriu[2][2] == "X") {
-        alert("Partida finalitzada!!");
-
-
+        var tauler = [];
+for (i = 0; i < FILES; i++) {
+    tauler[i] = [];
+    for (j = 0; j < COLUMNES; j++) {
+        tauler[i][j] = " ";
     }
 }
+
+var guanyador = 0;
+
+//2forma
+
+//var tauler1 = new Array(FILES);
+//for (i=0; i<FILES; i++){
+//    tauler1[i] = new Array(COLUMNES).fill(" ");
+//}
+
+
+//===============================FI DE LA PARTIDA=====================================//
+
+function revisarVictoria() {
+
+    var contO, contX;
+
+
+    //================================MIREM LES FILES=========================================//
+
+    for (var i = 0; i < FILES; i++) {
+
+        contO = 0;
+        contX = 0;
+
+        //=========================================================//
+
+        for (var j = 0; j < COLUMNES; j++) {
+            if (tauler[i][j] == "O") {
+
+                contO++;
+
+            }
+            if (tauler[i][j] == "X") {
+                contX++;
+
+            }
+
+        }
+
+        //=======================================================//
+
+        if (contO == FILES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn = document.getElementById(k + "." + l);
+                    btn.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has perdut!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            guanyador=1;
+            
+
+            return;
+
+
+        } //else {
+
+
+
+        if (contX == FILES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn1 = document.getElementById(k + "." + l);
+                    btn1.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has guanyat!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            guanyador=1;
+
+            return;
+
+
+        }
+
+
+
+        //}
+
+
+    }
+
+
+    //================================MIREM LES COLUMNES=========================================//
+
+
+    for (var i = 0; i < COLUMNES; i++) {
+
+        contO = 0;
+        contX = 0;
+
+        //=========================================================//
+
+        for (var j = 0; j < FILES; j++) {
+            if (tauler[j][i] == "O") {
+
+                contO++;
+                console.log(contO);
+
+            }
+            if (tauler[j][i] == "X") {
+                contX++;
+                console.log(contX);
+
+            }
+
+        }
+
+
+
+
+        if (contO == COLUMNES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn2 = document.getElementById(k + "." + l);
+                    btn2.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has perdut!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            guanyador=2;
+
+            return;
+
+
+        }
+
+
+
+        if (contX == COLUMNES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn3 = document.getElementById(k + "." + l);
+                    btn3.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has guanyat!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+             guanyador=2;
+
+            return;
+
+
+        }
+
+
+    }
+    
+    
+    //=================================================================== MIREM DIAGONALS =====================================================================//
+    
+    //====Esquerra a Dreta====//
+    
+  /*  
+         for (var i =0; i < FILES; i++){
+             for(var j =0; j<COLUMNES-1; j++){
+                 
+                 if (tauler[i][j] == "O") {
+
+                contO++;
+
+            }
+            if (tauler[i][j] == "X") {
+                contX++;
+
+            }
+                 
+             }
+         
+
+      
+
+                
+
+        //=======================================================//
+
+        if (contO == FILES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn = document.getElementById(k + "." + l);
+                    btn.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has perdut!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            
+            
+
+            return;
+
+
+        } //else {
+
+
+
+        if (contX == FILES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn1 = document.getElementById(k + "." + l);
+                    btn1.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has guanyat!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            
+
+            return;
+
+
+        }
+
+
+
+        //}
+
+
+    }
+
+    
+
+    //==== Dreta a Esquerra ====//
+    
+    
+         for (var i =0; i < FILES; i++){
+             for(var j =COLUMNES-1; j<COLUMNES; j++){
+                 
+                 if (tauler[i][j] == "O") {
+
+                contO++;
+
+            }
+            if (tauler[i][j] == "X") {
+                contX++;
+
+            }
+                 
+             }
+         
+
+      
+
+                
+
+        //=======================================================//
+
+        if (contO == FILES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn = document.getElementById(k + "." + l);
+                    btn.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has perdut!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            
+            
+
+            return;
+
+
+        } //else {
+
+
+
+        if (contX == FILES) {
+            for (var k = 0; k < FILES; k++) {
+                for (var l = 0; l < COLUMNES; l++) {
+                    var btn1 = document.getElementById(k + "." + l);
+                    btn1.setAttribute("disabled", "true");
+
+
+
+
+                }
+            }
+
+
+
+            var fi = document.createElement("h2");
+            fi.appendChild(document.createTextNode("Has guanyat!!!"));
+            var divH2 = document.getElementById("div1");
+            divH2.appendChild(fi);
+            
+
+            return;
+
+
+        }
+
+
+
+
+
+    }
+
+*/
+
+
+}
+
+function ferJugada() {
+
+    for (i = 0; i < FILES; i++) {
+        for (j = 0; j < COLUMNES; j++) {
+            if (tauler[i][j] == " ") {
+                tauler[i][j] = "O";
+                var btn = document.getElementById(i + "." + j);
+                btn.innerHTML = "O";
+                btn.disabled = true;
+                btn.style.background = "#F6E3CE";
+                btn.style.color = "blue";
+
+                return;
+
+
+            }
+        }
+        
+        
+    }
+
+    revisarVictoria();
+
+}
+
+window.onload = function () {
+
+    var taula = document.createElement("table");
+
+    for (i = 0; i < FILES; i++) {
+
+        var fila = taula.insertRow();
+
+        for (j = 0; j < COLUMNES; j++) {
+
+            var cela = fila.insertCell();
+            var btn = document.createElement("button");
+            //cela.setAttribute("id", i+"."+j);
+
+            cela.appendChild(document.createTextNode(tauler[i][j]));
+
+
+
+            btn.setAttribute("id", i + "." + j);
+            cela.appendChild(btn);
+
+            (function (f, c) {
+                btn.onclick = function () {
+                    tauler[f][c] = "X";
+                    event.target.innerHTML = "X";
+                    event.target.disabled = true;
+                    this.style.background = "paleturquoise"; //Canviar el color despres de clicar
+                   
+                    
+                   
+                    ferJugada();
+                    revisarVictoria();
+
+                  
+                            
+                        
+                    
+                
+                        
+                       
+                        
+                    
+                    
+                }
+            })(i, j);
+
+
+        }
+    }
+
+
+
+    var divTaula = document.getElementById("raya");
+    divTaula.appendChild(taula);
+
+
+
+
+}
+
+
+
